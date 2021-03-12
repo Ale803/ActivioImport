@@ -1,0 +1,49 @@
+[
+  {
+    "description": {
+      "name": "challange to 30",
+      "description": "This is a test input"
+    },
+    "participants": [
+      {
+        "username": "",
+        "score": 29,
+        "won": false
+      },
+      {
+        "username": "tester",
+        "score": 1,
+        "won": false
+      }
+    ],
+    "metadata": {
+      "goal": 30
+    }
+  },
+  {
+    "description": {
+      "name": "challange to 15",
+      "description": "This is a test input version 2"
+    },
+    "participants": [
+      {
+        "username": "null",
+        "score": 29,
+        "won": false
+      },
+      {
+        "username": "",
+        "score": 0,
+        "won": false
+      },
+      {
+        "username": "tester",
+        "score": 23,
+        "won": false
+      }
+    ],
+    "metadata": {
+      "goal": 15
+    }
+  }
+]

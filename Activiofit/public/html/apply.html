@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Username</p>
+    <input id="username" type="text">
+    <p>Submit</p>
+    <input id="submit" type="submit">
+
+    <script>
+        //Define the html elements
+        const hUsername = document.getElementById("username");
+        const hSubmit = document.getElementById("submit");
+
+        //Define the functions
+        async function increaseScore() {
+            let options = {
+                method: "POST",
+                body: JSON.stringify({username: hUsername.value}),
+                headers: {
+                    "content-type": "application/json"
+                }
+            }
+            let response = await fetch("/api/databases/users/increasescore", options);
+        }
+
+        //Define the event listeners
+        hSubmit.addEventListener("click", function() {
+            increaseScore();
+        })
+    </script>
+</body>
+</html>

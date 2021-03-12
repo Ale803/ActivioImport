@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/competitions.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>logo</li>
+                <li><a href="/media">Media</a></li>
+                <li><a href="/score">Score</a></li>
+                <li><a href="/competitions">Competitions</a></li>
+                <li><a href="/stats">Statistics</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="joinedCompetitions" class="joinedCompetitions">
+            <h1>competition lists</h1>
+            <div id="competitionList">
+                //
+            </div>
+        </div>
+        <div id="content" class="content">
+            //This is where the content is going to be displayed
+        </div>
+        <div class="joinCompetition">
+            <h1>Join the Competition</h1>
+            <input id="join" type="submit" value="Join">
+        </div>
+        <div class="competitionName">
+            <h1>Competition Name</h1>
+            <input id="competition" type="text" name="" id="">
+        </div>
+    </main>
+    <script>
+        //check for a login
+        var Username = null;
+        if (sessionStorage.getItem("username") != null) {
+            alert("you are loged in");
+            Username = sessionStorage.getItem("username");
+        }else {
+            while (true) {
+                alert("login required")
+            }
+        }
+
+        //Define html variables
+        const hJoinedCompetitions = document.getElementById("competitionList");
+        const hContent = document.getElementById("content");
+        const hJoin = document.getElementById("join");
+        const hCompetition = document.getElementById("competition");
+        //Define the site variables
+        var competitions = null;
+        var index = 0;
+
+        //This is a function which recieves data from the server and the stores it into the groups variable
+        async function getCompetitions() {
+            let options = {
+                method: "POSt",
+                body: JSON.stringify({username: Username}),
+                headers: {
+                    "content-type": "application/json"
+                }
+            }
+            let a = await fetch("/api/databases/competitions", options);
+            a = await a.json();
+            competitions = a;
+        }
+        async function joinCompetition() {
+            let options = {
+                method: "POST",
+                body: JSON.stringify({
+                    username: Username,
+                    competition: hCompetition.value
+                }),
+                headers: {
+                    "content-type": "application/json"
+                }
+            }
+            let response = await fetch("/api/databases/joinCompetition", options);
+        }
+        //This calls the function
+        getCompetitions();
+        //This loads the buttons on the side of the page
+        setTimeout(function(){
+            //This is where we render the competitions to the screen
+            let str = "";
+            for (let i = 0; i < competitions.length; i++) {
+                str += "<button onclick='index = " + i + ";'>" + competitions[i].description.name + "</button><br>"
+                // str += competitions[i].description.name + "<br>"
+            }
+            hJoinedCompetitions.innerHTML = str;
+        }, 1000);
+
+        setInterval(function() {
+            let string = "<h3>" + JSON.stringify(competitions[index].description.description) + "</h3>";
+            string += "<br>";
+            string += "<h1> goal: " + JSON.stringify(competitions[index].metadata.goal) + "</h1>";
+            string += "<br>";
+            for (let i = 0; i < competitions[index].participants.length; i++) {
+                string += competitions[index].participants[i].username + " : " + competitions[index].participants[i].score + "<br>";
+            }
+            hContent.innerHTML = string;
+        }, 200)
+
+        hJoin.addEventListener("click", function() {
+            joinCompetition();
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>register</h1>
+    <p>username</p>
+    <input id="username" type="text">
+    <p>password</p>
+    <input id="password" type="password">
+    <p>submit</p>
+    <input id="submit" type="submit">
+    <a href="/login">Login</a>
+    <script>
+        //Define the event listeners and html elements
+        const hSubmit = document.getElementById("submit");
+        const hUsername = document.getElementById("username");
+        const hPassword = document.getElementById("password");
+
+        hSubmit.addEventListener("click", function() {
+            sendData({
+                username: hUsername.value,
+                password: hPassword.value
+            })
+        })
+        //Define the functions
+        async function sendData(data) {
+            let options = {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "content-type": "application/json"
+                }
+            }
+            let responce = await fetch("/api/databases/newacount", options);
+            let json = await responce.text();
+            console.log(json);
+        }
+        
+    </script>
+</body>
+</html>

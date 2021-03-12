@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/media.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>logo</li>
+                <li><a href="/media">Media</a></li>
+                <li><a href="/score">Score</a></li>
+                <li><a href="/competitions">Competitions</a></li>
+                <li><a href="/stats">Statistics</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="groups">
+            <h1>Groups</h1>
+            <div id="group-list">
+                ;als
+            </div>
+        </div>
+        <div class="content">
+            <h1>Messages</h1>
+            <div id="message-list">
+                asd
+            </div>
+        </div>
+        <div class="submit">
+            <input id="submit" type="submit" value="Send">
+        </div>
+        <div class="sendmessage">
+            <input type="text" id="message">
+        </div>
+    </main>
+    <script>
+        //check for a login
+        var Username = null;
+        if (sessionStorage.getItem("username") != null) {
+            alert("you are loged in");
+            Username = sessionStorage.getItem("username");
+        }else {
+            while (true) {
+                alert("login required")
+            }
+        }
+
+        //Define the html elements
+        const hGrouplist = document.getElementById("group-list");
+        const hMessagelist = document.getElementById("message-list");
+        const hSubmit = document.getElementById("submit");
+        const hMessage = document.getElementById("message");
+
+        //Define the site variables
+        var groups = null;
+        var index = 0;
+
+        //Define the event listeners
+        hSubmit.addEventListener("click", function() {
+            sendMessage({
+                username: Username,
+                content: hMessage.value,
+                group: groups[index].name
+            })
+        })
+
+        //This is a function which recieves data from the server and the stores it into the groups variable
+        async function getGroups() {
+            let a = await fetch("/api/databases/groups");
+            a = await a.json();
+            groups = a;
+        }
+        //This is a function which will send a message to the server
+        async function sendMessage(data) {
+            let options = {
+                method: "POSt",
+                body: JSON.stringify(data),
+                headers: {
+                    "content-type": "application/json"
+                }
+            }
+            let repsonse = await fetch("/api/databases/groups/newmessage", options);
+        }
+        //This calls the function
+        getGroups();
+        //This loads the buttons on the side of the page
+        setTimeout(function(){
+            let str = "";
+            for (let i = 0; i < groups.length; i++) {
+                str += "<button onclick='index = " + i + "'><h3>" + groups[i].name + "</h3></button><br>";
+            }
+            hGrouplist.innerHTML = str;
+        }, 1000);
+
+
+        //This is the sites main loop
+        setInterval(function(){
+            let str = "";
+            for (let i = 0; i < groups[index].messages.length; i++) {
+                str += "<h3>" + groups[index].messages[i].content + "</h3>-Written by " + groups[index].messages[i].username + "<br>";
+            }
+            hMessagelist.innerHTML = str;
+        }, 100)
+
+        //This loop updates the messages
+        setInterval(function() {
+            getGroups();
+        }, 1000)
+    </script>
+</body>
+</html>

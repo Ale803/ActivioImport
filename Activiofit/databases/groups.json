@@ -1,0 +1,80 @@
+[
+  {
+    "name": "main",
+    "messages": [
+      {
+        "username": "username",
+        "content": "hi there today is a wonderful day"
+      },
+      {
+        "username": "",
+        "content": "hi this is very intresting"
+      },
+      {
+        "username": "",
+        "content": "hi this is very intresting"
+      },
+      {
+        "username": "",
+        "content": "hi there this is another message"
+      },
+      {
+        "username": "",
+        "content": "hi there"
+      },
+      {
+        "username": "",
+        "content": "hi there this is another message"
+      },
+      {
+        "username": "tester",
+        "content": "hi there this is from teh newest user with the name of tester"
+      },
+      {
+        "username": "tester",
+        "content": "hi"
+      },
+      {
+        "username": "tester",
+        "content": "Hi there"
+      },
+      {
+        "username": "tester",
+        "content": "Hi there"
+      },
+      {
+        "username": "tester",
+        "content": "hi there this is some random text"
+      },
+      {
+        "username": "tester",
+        "content": "as;ldfja;sldfj"
+      }
+    ]
+  },
+  {
+    "name": "main2",
+    "messages": [
+      {
+        "username": "username peson 2",
+        "content": "hi there today is a wonderful day v2"
+      },
+      {
+        "unsername": "null",
+        "content": "Hi there this is some other text from another user"
+      },
+      {
+        "username": "",
+        "content": "Hi there this is a message in group2 called main2"
+      },
+      {
+        "username": "tester",
+        "content": "This is a message"
+      },
+      {
+        "username": "tester",
+        "content": "a;lskfdj"
+      }
+    ]
+  }
+]

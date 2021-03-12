@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/score.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>logo</li>
+                <li><a href="/media">Media</a></li>
+                <li><a href="/score">Score</a></li>
+                <li><a href="/competitions">Competitions</a></li>
+                <li><a href="/stats">Statistics</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="center">
+        <h1 id="score">r</h1>
+        <h1>Available goals</h1>
+        <div id="goals">l</div>
+    </div>
+    <script>
+        //check for a login
+        var Username = null;
+        if (sessionStorage.getItem("username") != null) {
+            alert("you are loged in");
+            Username = sessionStorage.getItem("username");
+        }else {
+            while (true) {
+                alert("login required")
+            }
+        }
+        //Define html elements
+        const hScore = document.getElementById("score");
+        const hGoals = document.getElementById("goals");
+
+        //Define the functions
+        async function getScore() {
+            let options = {
+                method: "POST",
+                body: JSON.stringify({username: Username}),
+                headers: {
+                    "content-type": "application/json"
+                }
+            }
+            let response = await fetch("/api/databases/users/score", options);
+            let score = await response.json();
+            hScore.innerHTML = "score: " + score.score;
+            let string = "";
+            for (let i = 0; i < 50; i+=5) {
+                string += "<h3>Challenge to " + i + "</h3>";
+                if (score.score > i) {
+                    string += " -Completed";
+                }
+                string += "<br>"
+            }
+            hGoals.innerHTML = string;
+        }
+
+        getScore();
+
+    </script>
+</body>
+</html>
